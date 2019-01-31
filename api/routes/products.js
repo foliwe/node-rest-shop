@@ -82,4 +82,28 @@ router.delete("/:productId", (req, res, next) => {
     });
 });
 
+// PATCH REQUEST
+router.patch("/:productId", (req, res, next) => {
+  const id = req.params.productId;
+  let updateOps = {};
+
+  for(const ops of req.body){
+    updateOps[ops.propName] = ops.value;
+  }
+  Product.update({ _id: id },{$set: updateOps})
+    .exec()
+    .then(data => {
+      console.log(data);
+      res.status(200).json(data);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ error: err });
+    });
+});
+
 module.exports = router;
+
+[
+  {"propNme":"name","value":"Reamcast"}
+]
