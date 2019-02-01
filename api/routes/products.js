@@ -6,11 +6,26 @@ const mongoose = require("mongoose");
 //GET ALL REQUEST
 router.get("/", (req, res, next) => {
   Product.find()
+  .select('name price _id')
     .exec()
-    .then(data => {
-      console.log(data);
-      //   if (data.length >= 0) {
-      res.status(200).json(data);
+    .then(docs => {
+      const response = {
+        count: docs.length,
+        products: docs.map(doc =>{
+          return {
+            name: doc.name,
+            price: doc.price,
+            id: doc._id,
+            request:{
+
+              type: 'GET',
+              url: 'http://localhost:3000/products/'+ doc.id 
+            }
+          }
+        })
+      };
+        
+      res.status(200).json(response);
       //   } else {
       //     res.status(404).json({
       //       message: "No Record Found"
@@ -37,8 +52,16 @@ router.post("/", (req, res, next) => {
     .then(result => {
       console.log(result);
       res.status(201).json({
-        message: "POST request from /products",
-        createdProduct: result
+        message: "Product Created Successfully",
+        createdProduct: {
+          _id: result._id,
+          name: result.name,
+          price: result.price,
+          request:{
+            type: 'GET',
+            url: 'http://localhost:3000/products'+ result._id
+          }
+        }
       });
     })
     .catch(err => {
@@ -53,11 +76,18 @@ router.post("/", (req, res, next) => {
 router.get("/:productId", (req, res, next) => {
   const id = req.params.productId;
   Product.findById({ _id: id })
+  .select('name price _id')
     .exec()
-    .then(data => {
-      console.log("From database", data);
-      if (data) {
-        res.status(200).json(data);
+    .then(result => {
+      if (result) {
+        res.status(200).json({
+           product: result,
+           request: {
+             type: 'GET',
+             url: 'http://localhost:3000/products'
+           }
+          
+        });
       } else {
         res.status(404).json({ message: "Object not found" });
       }
@@ -74,7 +104,9 @@ router.delete("/:productId", (req, res, next) => {
   Product.remove({ _id: id })
     .exec()
     .then(data => {
-      res.status(200).json(data);
+      res.status(200).json({
+        message: 'Product deleted'
+      });
     })
     .catch(err => {
       console.log(err);
@@ -92,9 +124,16 @@ router.patch("/:productId", (req, res, next) => {
   }
   Product.update({ _id: id },{$set: updateOps})
     .exec()
-    .then(data => {
-      console.log(data);
-      res.status(200).json(data);
+    .then(result => {
+      console.log(result);
+      res.status(200).json({
+       message: 'Product updates',
+          request:{
+            type: 'GET',
+            url: 'http://localhost:3000/products/'+ id
+          }
+       
+      });
     })
     .catch(err => {
       console.log(err);
