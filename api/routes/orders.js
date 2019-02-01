@@ -10,6 +10,7 @@ router.get("/", (req, res, nex) => {
 
   Order.find()
   .select('quantity product _id')
+  .populate('product','name ')
   .exec()
   .then( docs =>{
     res.status(201).json({
@@ -80,7 +81,8 @@ router.post("/", (req, res, nex) => {
 // GET SINGLE ORDER
 router.get("/:orderId", (req, res, nex) => {
  Order.findById(req.params.orderId)
- .select('product quantity _id')
+ .select('product quantity')
+ .populate('product','name')
  .exec()
  .then( order =>{
    if (!order) {
