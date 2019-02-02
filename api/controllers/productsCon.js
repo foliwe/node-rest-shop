@@ -2,6 +2,7 @@
 const Product = require("../models/product");
 const multer = require('multer');
 const port = process.env.PORT || 3000;
+const siteUrl = 'https://sassnoderestapi.herokuapp.com'
 
  exports.getAllProducts = (req, res, next) => {
     Product.find()
@@ -19,7 +20,7 @@ const port = process.env.PORT || 3000;
               request:{
   
                 type: 'GET',
-                url: `http://localhost:${port}/products/`+ doc.id 
+                url: `${siteUrl}:${port}/products/`+ doc.id 
               }
             }
           })
@@ -51,7 +52,7 @@ const port = process.env.PORT || 3000;
              product: result,
              request: {
                type: 'GET',
-               url: `http://localhost:${port}/products/`
+               url: `${siteUrl}:${port}/products/`
              }
             
           });
@@ -87,7 +88,7 @@ const port = process.env.PORT || 3000;
             productImage: result.productImage,
             request:{
               type: 'GET',
-              url: `http://localhost:${port}/products/`+ result._id
+              url: `${siteUrl}:${port}/products/`+ result._id
             }
           }
         });
@@ -116,7 +117,7 @@ const port = process.env.PORT || 3000;
          message: 'Product updates',
             request:{
               type: 'GET',
-              url: `http://localhost:${port}/products/`+ id
+              url: `${siteUrl}:${port}/products/`+ id
             }
          
         });
