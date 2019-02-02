@@ -4,6 +4,8 @@ const multer = require('multer');
 const port = process.env.PORT || 3000;
 const siteUrl = 'https://sassnoderestapi.herokuapp.com'
 
+
+
  exports.getAllProducts = (req, res, next) => {
     Product.find()
     .select('name price _id productImage')
@@ -17,11 +19,12 @@ const siteUrl = 'https://sassnoderestapi.herokuapp.com'
               price: doc.price,
               id: doc._id,
               productImage: doc.productImage,
-              request:{
-  
+              request:{ 
+      
                 type: 'GET',
-                url: `${siteUrl}/products/`+ doc.id 
-              }
+                url: 'localhost:3000/products/'+ doc.id 
+              },
+             
             }
           })
         };
