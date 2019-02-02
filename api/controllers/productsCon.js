@@ -20,7 +20,7 @@ const siteUrl = 'https://sassnoderestapi.herokuapp.com'
               request:{
   
                 type: 'GET',
-                url: `${siteUrl}:${port}/products/`+ doc.id 
+                url: `${siteUrl}/products/`+ doc.id 
               }
             }
           })
@@ -52,7 +52,7 @@ const siteUrl = 'https://sassnoderestapi.herokuapp.com'
              product: result,
              request: {
                type: 'GET',
-               url: `${siteUrl}:${port}/products/`
+               url: `${siteUrl}/products/`
              }
             
           });
@@ -88,7 +88,7 @@ const siteUrl = 'https://sassnoderestapi.herokuapp.com'
             productImage: result.productImage,
             request:{
               type: 'GET',
-              url: `${siteUrl}:${port}/products/`+ result._id
+              url: `${siteUrl}/products/`+ result._id
             }
           }
         });
@@ -117,7 +117,7 @@ const siteUrl = 'https://sassnoderestapi.herokuapp.com'
          message: 'Product updates',
             request:{
               type: 'GET',
-              url: `${siteUrl}:${port}/products/`+ id
+              url: `${siteUrl}/products/`+ id
             }
          
         });
