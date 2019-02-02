@@ -4,6 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const cors = require('cors')
 
 // Routes----------
 const productsRoutes = require("./api/routes/products");
@@ -15,7 +16,6 @@ mongoose.connect(
   "mongodb://foliwe:"+ process.env.MONGO_DB_ATLAS+"@cluster0-shard-00-00-p6mvy.mongodb.net:27017,cluster0-shard-00-01-p6mvy.mongodb.net:27017,cluster0-shard-00-02-p6mvy.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true",
   { useNewUrlParser: true }
 );
-
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'))
 app.use(bodyParser.urlencoded({ extended: false }));
