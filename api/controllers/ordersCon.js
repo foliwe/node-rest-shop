@@ -18,7 +18,7 @@ exports.get_all_orders =  (req, res, next) => {
   
             request:{
               type: 'GET',
-              url: `${siteUrl}/orders/`
+              url: `localhost:3000/orders/`+ doc._id
             }
           }
         })
@@ -34,31 +34,57 @@ exports.get_all_orders =  (req, res, next) => {
   exports.get_single_order = (req, res, nex) => {
     Order.findById(req.params.orderId)
     .select('product quantity')
-    .populate('product','name')
+    .populate('product')
     .exec()
     .then( order =>{
       if (!order) {
         return res.status(404).json({
           message: 'Order not found'
-        })
+        });
       }
       res.status(200).json({
-         orderObj: order,
+         order: order,
    
          request:{
            type: 'GET',
-           url: `${siteUrl}/orders/`+ doc._id
+           url: "http://localhost:3000/orders/"+ order._id
          }
-      })
+      });
     })
     .catch(err =>{
      res.status(500).json({
        error: err
-     })
-      //catchError(err)
-    })
+     });
+     
+    });
     
-   }
+   };
+
+   exports.get_single_old = (req, res, nex) => {
+    Order.findById(req.params.orderId)
+      .populate("product")
+      .exec()
+      .then(order => {
+        if (!order) {
+          return res.status(404).json({
+            message: "Order not found"
+          });
+        }
+        res.status(200).json({
+          order: order,
+          request: {
+            type: "GET",
+            url: "http://localhost:3000/orders/"+ order._id
+          }
+        });
+      })
+      .catch(err => {
+        res.status(500).json({
+          error: err
+        });
+      });
+  };
+  
 
   exports.create_new_order = (req, res, nex) => {
     Product.findById( req.body.productId)
@@ -86,7 +112,7 @@ exports.get_all_orders =  (req, res, next) => {
           },
           request:{
             type: 'GET',
-            url: `${siteUrl}/orders/` + result._id
+            url: `localhost:3000/orders/` + result._id
           }
         });
     })
@@ -105,7 +131,7 @@ exports.get_all_orders =  (req, res, next) => {
     .then( order =>{
       res.status(200).json({
           message: 'Order deleted',
-           url: `${siteUrl}/orders/`+ doc._id
+           url: `localhost:3000/orders/`+ doc._id
          
       })
     })

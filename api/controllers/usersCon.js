@@ -113,10 +113,4 @@ exports.deleteUser = (req,res, next) =>{
     
 }
 
-exports.userLogout = (req, res, next) => {
-  let token = req.headers.authorization.split(" ")[1];
-  token = ''
-  console.log(token);
-  
-  
-  }
+
