@@ -18,7 +18,7 @@ exports.get_all_orders =  (req, res, next) => {
   
             request:{
               type: 'GET',
-              url: 'http://localhost:3000/orders/'+ doc._id
+              url: `http://localhost:${port}/orders/`+ doc._id
             }
           }
         })
@@ -47,7 +47,7 @@ exports.get_all_orders =  (req, res, next) => {
    
          request:{
            type: 'GET',
-           url: 'http://localhost:3000/orders'
+           url: `http://localhost:${port}/orders/`
          }
       })
     })
@@ -86,7 +86,7 @@ exports.get_all_orders =  (req, res, next) => {
           },
           request:{
             type: 'GET',
-            url: 'http://localhost:3000/orders/' + result._id
+            url: `http://localhost:${port}/orders/` + result._id
           }
         });
     })
@@ -105,7 +105,7 @@ exports.get_all_orders =  (req, res, next) => {
     .then( order =>{
       res.status(200).json({
           message: 'Order deleted',
-           url: 'http://localhost:3000/orders'
+           url: `http://localhost:${port}/orders/`
          
       })
     })

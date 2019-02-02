@@ -1,6 +1,7 @@
 
 const Product = require("../models/product");
 const multer = require('multer');
+const port = process.env.PORT || 3000;
 
  exports.getAllProducts = (req, res, next) => {
     Product.find()
@@ -18,7 +19,7 @@ const multer = require('multer');
               request:{
   
                 type: 'GET',
-                url: 'http://localhost:3000/products/'+ doc.id 
+                url: `http://localhost:${port}/products/`+ doc.id 
               }
             }
           })
@@ -50,7 +51,7 @@ const multer = require('multer');
              product: result,
              request: {
                type: 'GET',
-               url: 'http://localhost:3000/products'
+               url: `http://localhost:${port}/products/`
              }
             
           });
@@ -86,7 +87,7 @@ const multer = require('multer');
             productImage: result.productImage,
             request:{
               type: 'GET',
-              url: 'http://localhost:3000/products/'+ result._id
+              url: `http://localhost:${port}/products/`+ result._id
             }
           }
         });
@@ -115,7 +116,7 @@ const multer = require('multer');
          message: 'Product updates',
             request:{
               type: 'GET',
-              url: 'http://localhost:3000/products/'+ id
+              url: `http://localhost:${port}/products/`+ id
             }
          
         });
